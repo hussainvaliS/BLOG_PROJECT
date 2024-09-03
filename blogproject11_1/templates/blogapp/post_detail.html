@@ -1,0 +1,57 @@
+{% extends "blogapp/base.html" %}
+
+{% block title_block %}
+{{ post.title}}
+
+{% endblock title_block %}
+
+{% block content_block %}
+<h1>{{ post.title}}</h1>
+
+<p>publish on {{ post.publish }} by {{ post.author }}</p>
+<h5>{{post.body}}</h5>
+<br><br>
+
+<div align="center">
+	<a href="/{{ post_1.id }}/share" class="button">share post by email </a>
+</div>
+
+
+
+{% with comments.count as comments_count %}
+<h5> {{comments_count}} comment {{ comments_count}} </h5>
+
+{% endwith %}
+
+
+{% if comments %}
+{% for comment in comments %}
+<p>comment {{forloop.counter}} by {{comment.name}} on {{ comment.created}}</p>
+<div>
+	{{ comment.body}}
+</div>
+
+{% endfor %}
+{% else %}
+<p>There are no comments yet!!!</p>
+{% endif %}
+
+{% if csubmit %}
+<h2>Your comment added successfully</h2>
+<h3>Your comment added successfully</h3>
+
+
+{% else %}
+
+<form method="post">
+	{{ form.as_p }}
+	{% csrf_token %}
+	<input type="submit" name="" value="submit Comment">
+</form>
+{% endif %}
+
+
+
+
+
+{% endblock content_block %}
